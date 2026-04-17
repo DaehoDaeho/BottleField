@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -107,7 +108,7 @@ public class InteractionSensor : MonoBehaviour
             return;
         }
 
-        if(currentTargetName != null)
+        if(currentInteractable != null)
         {
             currentInteractable.OnFocusExit();
         }
@@ -127,7 +128,7 @@ public class InteractionSensor : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)    
     {
         if(IsInLayerMask(other.gameObject.layer, interactableLayerMask) == false)
         {
