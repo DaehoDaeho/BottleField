@@ -323,8 +323,10 @@ GameObject:
   m_Component:
   - component: {fileID: 448561755}
   - component: {fileID: 448561754}
-  - component: {fileID: 448561753}
   - component: {fileID: 448561756}
+  - component: {fileID: 448561759}
+  - component: {fileID: 448561758}
+  - component: {fileID: 448561757}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -332,25 +334,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &448561753
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 448561752}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69b1f0d73db0bca4ba1e8868b34e7b96, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walkSpeed: 5
-  jumpSpeed: 6.5
-  gravity: -20
-  groundedStickVelocity: -2
-  jumpKey: 32
-  moveReference: {fileID: 990145100}
-  characterController: {fileID: 448561754}
 --- !u!143 &448561754
 CharacterController:
   m_ObjectHideFlags: 0
@@ -406,7 +389,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraPivot: {fileID: 990145100}
-  moveMotor: {fileID: 448561753}
+  moveMotor: {fileID: 0}
   mouseSensitivity: 180
   minPitch: -80
   maxPitch: 80
@@ -414,6 +397,64 @@ MonoBehaviour:
   lockCursorOnStart: 1
   unlockCursorKey: 27
   isCursorLocked: 0
+--- !u!114 &448561757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 448561752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb0934672a64ef43a47243c1eb056ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterController: {fileID: 448561754}
+  inputReader: {fileID: 448561759}
+  stanceController: {fileID: 448561758}
+  moveReference: {fileID: 990145100}
+  walkSpeed: 5
+  sprintSpeed: 8
+  crouchSpeed: 2.5
+  jumpSpeed: 6.5
+  gravity: -20
+  groundedStickVelocity: -2
+--- !u!114 &448561758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 448561752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9371c5974f02f7849b329831675b3443, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterController: {fileID: 448561754}
+  cameraPivot: {fileID: 990145100}
+  inputReader: {fileID: 448561759}
+  standHeight: 2
+  standCameraLocalY: 1.6
+  crouchHeight: 1
+  crouchCameraLocalY: 0.8
+  stanceLerpSpeed: 10
+--- !u!114 &448561759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 448561752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc3512051e65ba046b4eaf26670454b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpKey: 32
+  sprintKey: 304
+  crouchToggleKey: 306
+  enableInput: 1
 --- !u!1 &681673104
 GameObject:
   m_ObjectHideFlags: 0
