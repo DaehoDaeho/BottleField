@@ -19,4 +19,6 @@ public interface IInteractable
     /// 실제 상호작용 입력이 들어왔을 때 호출.
     /// </summary>
     void Interact();
+
+    bool CanInteract();
 }

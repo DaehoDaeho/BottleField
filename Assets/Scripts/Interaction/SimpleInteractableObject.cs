@@ -66,4 +66,10 @@ public class SimpleInteractableObject : MonoBehaviour, IInteractable
     {
         cachedMaterial.color = targetColor;
     }
+
+    public bool CanInteract()
+    {
+        bool canInteract = allowMultipleInteraction == true || hasInteracted == false;
+        return canInteract;
+    }
 }
