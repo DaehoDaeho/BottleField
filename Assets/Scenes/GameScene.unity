@@ -489,6 +489,8 @@ GameObject:
   - component: {fileID: 448561757}
   - component: {fileID: 448561760}
   - component: {fileID: 448561761}
+  - component: {fileID: 448561763}
+  - component: {fileID: 448561762}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -666,6 +668,43 @@ MonoBehaviour:
   stanceController: {fileID: 448561758}
   lookController: {fileID: 448561756}
   raycastInteractor: {fileID: 448561760}
+--- !u!114 &448561762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 448561752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0536b3f937d3d648b2a6d9f14895af3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  combatInputReader: {fileID: 448561763}
+  fireCamera: {fileID: 0}
+  currentGunData:
+    gunName: Pistol
+    isAutomatic: 0
+    fireInterval: 0.25
+    maxDistance: 100
+    debugRayColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  canFire: 0
+  lastFireTime: -999
+  fireRequested: 0
+--- !u!114 &448561763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 448561752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e6534638efdcfe4aac98044aefee1c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableCombatInput: 1
+  fireMouseButton: 0
 --- !u!1 &681673104
 GameObject:
   m_ObjectHideFlags: 0
