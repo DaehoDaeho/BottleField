@@ -18,4 +18,8 @@ public class GunData
     public float maxDistance = 100.0f;
 
     public Color debugRayColor = Color.yellow;
+
+    public float damage = 10.0f;
+    public LayerMask hitLayerMask;
+    public GameObject hitEffectPrefab;
 }

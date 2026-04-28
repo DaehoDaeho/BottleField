@@ -84,6 +84,45 @@ public class GunController : MonoBehaviour
         Vector3 rayLength = rayDirection * currentGunData.maxDistance;
 
         Debug.DrawRay(rayOrigin, rayLength, currentGunData.debugRayColor, 0.2f);
+
+        Ray fireRay = new Ray(rayOrigin, rayDirection);
+        RaycastHit hitInfo;
+
+        bool hasHit = Physics.Raycast(fireRay, out hitInfo, currentGunData.maxDistance, currentGunData.hitLayerMask);
+
+        if(hasHit == true)
+        {
+            ProcessHit(hitInfo, rayDirection);
+        }
+    }
+
+    /// <summary>
+    /// Raycast 명중 결과 처리.
+    /// </summary>
+    /// <param name="hitInfo">명중된 대상의 정보</param>
+    /// <param name="rayDirection">총알의 진행 방향</param>
+    void ProcessHit(RaycastHit hitInfo, Vector3 rayDirection)
+    {
+        Collider hitCollider = hitInfo.collider;
+
+        string hitObjectName = hitCollider.name;
+        float hitDistance = hitInfo.distance;
+        Vector3 hitPoint = hitInfo.point;
+
+        IHitTarget hitTarget = hitCollider.GetComponent<IHitTarget>();
+        if(hitTarget != null)
+        {
+            hitTarget.ReceiveHit(currentGunData.damage, hitPoint, rayDirection, hitInfo.normal);
+            GameObject effectObject = Instantiate(currentGunData.hitEffectPrefab, hitPoint, Quaternion.identity);
+            if(effectObject != null)
+            {
+                Destroy(effectObject, 1.0f);
+            }
+        }
+
+        Debug.Log("맞은 놈 이름 = " + hitObjectName);
+        Debug.Log("명중 거리 = " + hitDistance);
+        Debug.Log("명중 위치 = " + hitPoint);
     }
 
     public GunData CurrentGunData
