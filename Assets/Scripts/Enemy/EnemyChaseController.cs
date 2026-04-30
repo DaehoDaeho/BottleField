@@ -129,4 +129,9 @@ public class EnemyChaseController : MonoBehaviour
         transform.rotation = Quaternion.RotateTowards(transform.rotation,
             targetRotation, angularSpeed * Time.deltaTime);
     }
+
+    public EnemyAIState CurrentState
+    {
+        get { return currentState; }
+    }
 }
