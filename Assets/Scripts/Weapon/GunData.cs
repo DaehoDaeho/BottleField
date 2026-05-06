@@ -22,4 +22,8 @@ public class GunData
     public float damage = 10.0f;
     public LayerMask hitLayerMask;
     public GameObject hitEffectPrefab;
+
+    public int magazineSize = 30;
+    public int startReserveAmmo = 90;
+    public float reloadDuration = 1.5f;
 }

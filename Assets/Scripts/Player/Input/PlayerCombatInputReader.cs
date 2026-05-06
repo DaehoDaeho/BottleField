@@ -12,6 +12,8 @@ public class PlayerCombatInputReader : MonoBehaviour
     // 발사 입력에 사용할 마우스 버튼 번호. 0:왼쪽 버튼, 1:오른쪽 버튼.
     [SerializeField] private int fireMouseButton = 0;
 
+    [SerializeField] private KeyCode reloadKey = KeyCode.R;
+
     // 이번 프레임에 발사 버튼이 눌렸는지 저장.
     private bool firePressed = false;
 
@@ -73,6 +75,19 @@ public class PlayerCombatInputReader : MonoBehaviour
             {
                 ClearInputState();
             }
+        }
+    }
+
+    public bool ReloadPressed
+    {
+        get
+        {
+            if(enableCombatInput == false)
+            {
+                return false;
+            }
+
+            return Input.GetKeyDown(reloadKey);
         }
     }
 }

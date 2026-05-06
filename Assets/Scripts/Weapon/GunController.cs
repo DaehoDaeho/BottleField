@@ -22,14 +22,28 @@ public class GunController : MonoBehaviour
     // 이번 프레임에 발사 요청이 들어왔는지 여부.
     [SerializeField] private bool fireRequested = false;
 
+    [SerializeField] private int currentAmmo = 0;
+    [SerializeField] private int reserveAmmo = 0;
+    [SerializeField] private bool isReloading = false;
+    [SerializeField] private float reloadTimer = 0.0f;
+
     private void Awake()
     {
         fireCamera = Camera.main;
+
+        currentAmmo = currentGunData.magazineSize;
+        reserveAmmo = currentGunData.startReserveAmmo;
+        isReloading = false;
+        reloadTimer = 0.0f;
     }
 
     // Update is called once per frame
     void Update()
     {
+        UpdateReloadTimer();
+        // 재장전 입력 처리.
+        HandleReloadInput();
+
         UpdateFireRequest();
         UpdateCanFireState();
 
@@ -75,6 +89,16 @@ public class GunController : MonoBehaviour
     /// </summary>
     void Fire()
     {
+        if(isReloading == true)
+        {
+            return;
+        }
+
+        if(currentAmmo <= 0)
+        {
+            return;
+        }
+
         lastFireTime = Time.time;
 
         Transform cameraTransform = fireCamera.transform;
@@ -94,6 +118,8 @@ public class GunController : MonoBehaviour
         {
             ProcessHit(hitInfo, rayDirection);
         }
+
+        currentAmmo--;
     }
 
     /// <summary>
@@ -123,6 +149,64 @@ public class GunController : MonoBehaviour
         Debug.Log("맞은 놈 이름 = " + hitObjectName);
         Debug.Log("명중 거리 = " + hitDistance);
         Debug.Log("명중 위치 = " + hitPoint);
+    }
+
+    void UpdateReloadTimer()
+    {
+        if(isReloading == false)
+        {
+            return;
+        }
+
+        reloadTimer -= Time.deltaTime;
+        if(reloadTimer <= 0.0f)
+        {
+            // 재장전 완료 처리.
+            CompleteReload();
+        }
+    }
+
+    void CompleteReload()
+    {
+        int neededAmmo = currentGunData.magazineSize - currentAmmo;
+        int ammoToLoad = Mathf.Min(neededAmmo, reserveAmmo);
+
+        currentAmmo += ammoToLoad;
+        reserveAmmo -= ammoToLoad;
+
+        isReloading = false;
+        reloadTimer = 0.0f;
+    }
+
+    void HandleReloadInput()
+    {
+        if(combatInputReader.ReloadPressed == true)
+        {
+            // 재장전 시도.
+            TryStartReload();
+        }
+    }
+
+    bool TryStartReload()
+    {
+        if(isReloading == true)
+        {
+            return false;
+        }
+
+        if(currentAmmo >= currentGunData.magazineSize)
+        {
+            return false;
+        }
+
+        if(reserveAmmo <= 0)
+        {
+            return false;
+        }
+
+        isReloading = true;
+        reloadTimer = currentGunData.reloadDuration;
+        return true;
     }
 
     public GunData CurrentGunData

@@ -5,12 +5,10 @@ public class EnemyRagdoll : MonoBehaviour
 {
     [SerializeField] private Animator animator;
 
-    private Collider[] colliders;
     private Rigidbody[] rigidBodies;
 
     private void Awake()
     {
-        colliders = GetComponentsInChildren<Collider>();
         rigidBodies = GetComponentsInChildren<Rigidbody>();
     }
 

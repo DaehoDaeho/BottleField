@@ -69,7 +69,10 @@ public class EnemyHealth : MonoBehaviour, IHitTarget
         StopMovementAndAttack();
         DisableCollider();
 
-        ragdoll.EnableRagdoll();
+        if(ragdoll != null)
+        {
+            ragdoll.EnableRagdoll();
+        }
 
         if (destroyOnDeath == true)
         {
