@@ -7,6 +7,7 @@ using UnityEngine;
 public class GunController : MonoBehaviour
 {
     [SerializeField] private PlayerCombatInputReader combatInputReader;
+    [SerializeField] private PlayerAimController aimController;
 
     // 발사 방향 기준이 될 카메라 참조.
     [SerializeField] private Camera fireCamera;
@@ -81,7 +82,7 @@ public class GunController : MonoBehaviour
         // 현재 시간에서 마지막으로 발사했던 시간 사이의 간격을 계산.
         float elapsedTimeSinceLastFire = currentTime - lastFireTime;
 
-        canFire = elapsedTimeSinceLastFire >= currentGunData.fireInterval;
+        canFire = elapsedTimeSinceLastFire >= (currentGunData.fireInterval * aimController.FireIntervalMultiplier);
     }
 
     /// <summary>

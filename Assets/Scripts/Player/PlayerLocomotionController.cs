@@ -35,6 +35,8 @@ public class PlayerLocomotionController : MonoBehaviour
     // 현재 이동 시 흔들림 오프셋을 목표 오프셋 쪽으로 따라가게 만들 보간 속도.
     [SerializeField] private float bobLerpSpeed = 12.0f;
 
+    [SerializeField] private PlayerAimController aimController;
+
     private Vector3 desiredMoveDirection = Vector3.zero;    // 현재 입력 기준으로 플레이어가 가고 싶어하는 수평 방향 벡터.
     private Vector3 currentHorizontalVelocity = Vector3.zero;   // 실제로 적용 중인 현재 수평 속도 벡터.
 
@@ -90,18 +92,20 @@ public class PlayerLocomotionController : MonoBehaviour
     /// 현재 상태에 따라 목표 이동 속도를 결정.
     /// </summary>
     void UpdateCurrentMoveState()
-    {        
+    {
+        float aimMultiplier = aimController.MoveSpeedMultiplier;
+
         if(isCrouching == true)
         {
-            currentMoveSpeed = crouchSpeed;
+            currentMoveSpeed = (crouchSpeed * aimMultiplier);
         }
         else if(isSprinting == true)
         {
-            currentMoveSpeed = sprintSpeed;
+            currentMoveSpeed = (sprintSpeed * aimMultiplier);
         }
         else
         {
-            currentMoveSpeed = walkSpeed;
+            currentMoveSpeed = (walkSpeed * aimMultiplier);
         }
     }
 

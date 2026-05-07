@@ -11,6 +11,7 @@ public class PlayerCombatInputReader : MonoBehaviour
 
     // 발사 입력에 사용할 마우스 버튼 번호. 0:왼쪽 버튼, 1:오른쪽 버튼.
     [SerializeField] private int fireMouseButton = 0;
+    [SerializeField] private int aimMouseButton = 1;
 
     [SerializeField] private KeyCode reloadKey = KeyCode.R;
 
@@ -88,6 +89,19 @@ public class PlayerCombatInputReader : MonoBehaviour
             }
 
             return Input.GetKeyDown(reloadKey);
+        }
+    }
+
+    public bool AimHeld
+    {
+        get
+        {
+            if (enableCombatInput == false)
+            {
+                return false;
+            }
+
+            return Input.GetMouseButton(aimMouseButton);
         }
     }
 }

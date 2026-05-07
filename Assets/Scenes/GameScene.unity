@@ -549,6 +549,7 @@ GameObject:
   - component: {fileID: 448561763}
   - component: {fileID: 448561762}
   - component: {fileID: 448561764}
+  - component: {fileID: 448561765}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -649,6 +650,7 @@ MonoBehaviour:
   sprintBobAmplitude: 0.3
   crouchBobAmplitude: 0.05
   bobLerpSpeed: 12
+  aimController: {fileID: 448561765}
 --- !u!114 &448561758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -739,6 +741,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combatInputReader: {fileID: 448561763}
+  aimController: {fileID: 448561765}
   fireCamera: {fileID: 0}
   currentGunData:
     gunName: Pistol
@@ -775,6 +778,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enableCombatInput: 1
   fireMouseButton: 0
+  aimMouseButton: 1
   reloadKey: 114
 --- !u!114 &448561764
 MonoBehaviour:
@@ -794,6 +798,26 @@ MonoBehaviour:
   isDead: 0
   isInvincible: 0
   invincibleTimer: 0
+--- !u!114 &448561765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 448561752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf5af84e8b49ed44db72da1e437da46b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  combatInputReader: {fileID: 448561763}
+  targetCamera: {fileID: 754932942}
+  normalFov: 60
+  aimFov: 30
+  fovLerpSpeed: 10
+  aimMoveSpeedMultiplier: 0.55
+  aimFireIntervalMultiplier: 1.15
+  isAiming: 0
 --- !u!1 &592243132
 GameObject:
   m_ObjectHideFlags: 0
