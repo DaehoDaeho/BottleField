@@ -332,8 +332,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 50
   currentHealth: 0
-  destroyOnDeath: 0
-  destroyDelay: 1.5
+  destroyOnDeath: 1
+  destroyDelay: 3
   isDead: 0
   collider: {fileID: 6611337349964289804}
   navMeshAgent: {fileID: 165435827616508964}

@@ -10,10 +10,6 @@ public class EnemyRagdoll : MonoBehaviour
     private void Awake()
     {
         rigidBodies = GetComponentsInChildren<Rigidbody>();
-    }
-
-    private void Start()
-    {
         DisableRagdoll();
     }
 
