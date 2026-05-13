@@ -100,4 +100,14 @@ public class PlayerHealth : MonoBehaviour
     {
         get { return isDead; }
     }
+
+    public float CurrentHealth
+    {
+        get { return currentHealth; }
+    }
+
+    public float MaxHealth
+    {
+        get { return maxHealth; }
+    }
 }

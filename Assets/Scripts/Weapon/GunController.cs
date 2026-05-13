@@ -219,4 +219,19 @@ public class GunController : MonoBehaviour
     {
         get { return canFire; }
     }
+
+    public int CurrentAmmo
+    {
+        get { return currentAmmo; }
+    }
+
+    public int ReserveAmmo
+    {
+        get { return reserveAmmo; }
+    }
+
+    public bool IsReloading
+    {
+        get { return isReloading; }
+    }
 }
