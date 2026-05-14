@@ -13,18 +13,20 @@ public class HUDUIController : MonoBehaviour
     [SerializeField] private PlayerAimController aimController;
 
     [Header("Health UI")]
-    [SerializeField] private TextMeshProUGUI healthText;
+    [SerializeField] private TMP_Text healthText;
     [SerializeField] private Image healthFillImage;
 
     [Header("Ammo UI")]
-    [SerializeField] private TextMeshProUGUI ammoText;
-    [SerializeField] private TextMeshProUGUI reloadText;
+    [SerializeField] private TMP_Text ammoText;
+    [SerializeField] private TMP_Text reloadText;
 
     [Header("Crosshair UI")]
     [SerializeField] private RectTransform crosshairRoot;
     [SerializeField] private float normalCrosshairScale = 1.0f;
     [SerializeField] private float aimCrosshairScale = 0.75f;
     [SerializeField] private float crosshairScaleLerpSpeed = 12.0f;
+
+    [SerializeField] private TMP_Text remainTimeText;
 
     /// <summary>
     /// 시작 시 기본 UI 상태를 한 번 갱신한다.
@@ -42,10 +44,11 @@ public class HUDUIController : MonoBehaviour
     /// </summary>
     private void Update()
     {
+        UpdateRemainTime();
         UpdateHealthUi();
         UpdateAmmoUi();
         UpdateReloadUi();
-        UpdateCrosshairUi();
+        UpdateCrosshairUi();        
     }
 
     /// <summary>
@@ -161,5 +164,17 @@ public class HUDUIController : MonoBehaviour
         Vector3 nextScale = Vector3.Lerp(currentScale, targetScaleVector, crosshairScaleLerpSpeed * Time.deltaTime);
 
         crosshairRoot.localScale = nextScale;
+    }
+
+    /// <summary>
+    /// 클리어까지 남은 시간을 출력.
+    /// </summary>
+    private void UpdateRemainTime()
+    {
+        if (remainTimeText != null)
+        {
+            remainTimeText.text = "Survival Time : " + 
+                Utility.FormatTime(GameManager.instance.RemainTimer);
+        }
     }
 }
