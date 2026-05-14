@@ -173,7 +173,7 @@ public class HUDUIController : MonoBehaviour
     {
         if (remainTimeText != null)
         {
-            remainTimeText.text = "Survival Time : " + 
+            remainTimeText.text = "Remain Time : " + 
                 Utility.FormatTime(GameManager.instance.RemainTimer);
         }
     }
