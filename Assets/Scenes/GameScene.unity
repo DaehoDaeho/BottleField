@@ -3270,7 +3270,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerHealth: {fileID: 448561764}
   resultUi: {fileID: 142460140}
-  clearSurvivalTime: 180
+  clearSurvivalTime: 60
   currentState: 0
   survivalTimer: 0
   remainTimer: 0
