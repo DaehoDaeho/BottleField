@@ -14,9 +14,10 @@ public class EnemyHealth : MonoBehaviour, IHitTarget
 
     [SerializeField] private Collider collider; 
     [SerializeField] private NavMeshAgent navMeshAgent;
-    [SerializeField] private EnemyChaseController chaseController;
-    [SerializeField] private EnemyAttackController attackController;
+    //[SerializeField] private EnemyChaseController chaseController;
+    //[SerializeField] private EnemyAttackController attackController;
     [SerializeField] private EnemyRagdoll ragdoll;
+    [SerializeField] private EnemyStateMachine stateMachine;
 
     [SerializeField] private Renderer renderer;
     [SerializeField] private Color hitColor = Color.red;
@@ -82,6 +83,14 @@ public class EnemyHealth : MonoBehaviour, IHitTarget
 
     void StopMovementAndAttack()
     {
+        if(stateMachine != null)
+        {
+            // fsm의 상태를 강제로 Dead 상태로 전환
+            // fsm을 비활성화 처리를 해서 업데이트를 막는다.
+            stateMachine.ForceDeadState();
+            stateMachine.enabled = false;
+        }
+
         if(navMeshAgent != null)
         {
             navMeshAgent.isStopped = true;
@@ -89,15 +98,15 @@ public class EnemyHealth : MonoBehaviour, IHitTarget
             navMeshAgent.enabled = false;
         }
 
-        if(chaseController != null)
-        {
-            chaseController.enabled = false;
-        }
+        //if(chaseController != null)
+        //{
+        //    chaseController.enabled = false;
+        //}
 
-        if(attackController != null)
-        {
-            attackController.enabled = false;
-        }
+        //if(attackController != null)
+        //{
+        //    attackController.enabled = false;
+        //}
     }
 
     void DisableCollider()
@@ -138,5 +147,10 @@ public class EnemyHealth : MonoBehaviour, IHitTarget
         {
             materials[i].color = originalColors[i];
         }
+    }
+
+    public bool IsDead
+    {
+        get { return isDead; }
     }
 }

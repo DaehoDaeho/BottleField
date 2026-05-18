@@ -188,6 +188,7 @@ GameObject:
   - component: {fileID: 261395431667052766}
   - component: {fileID: 1731718522113522363}
   - component: {fileID: 2837876833892403075}
+  - component: {fileID: 7907451096005293997}
   m_Layer: 9
   m_Name: Enemy
   m_TagString: Untagged
@@ -285,7 +286,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5266118152557207975}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 019cf98a2bf54d546b1d00fb9a33aeb7, type: 3}
   m_Name: 
@@ -306,7 +307,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5266118152557207975}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d7aa780f0f4c45545b41edb8bc7b0ded, type: 3}
   m_Name: 
@@ -340,9 +341,32 @@ MonoBehaviour:
   chaseController: {fileID: 261395431667052766}
   attackController: {fileID: 1731718522113522363}
   ragdoll: {fileID: 2737754722442521419}
+  stateMachine: {fileID: 0}
   renderer: {fileID: 5906860050105833041}
   hitColor: {r: 1, g: 0, b: 0, a: 1}
   hitDuration: 0.2
+--- !u!114 &7907451096005293997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5266118152557207975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e80febacc174a448bc243f0a78f50be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  navMeshAgent: {fileID: 165435827616508964}
+  targetDetector: {fileID: 6966023298770321126}
+  enemyHealth: {fileID: 2837876833892403075}
+  moveSpeed: 3.5
+  angularSpeed: 360
+  acceleration: 8
+  repathInterval: 0.2
+  attackDamage: 10
+  attackInterval: 1
+  currentState: 0
 --- !u!1001 &2041696898997900660
 PrefabInstance:
   m_ObjectHideFlags: 0
