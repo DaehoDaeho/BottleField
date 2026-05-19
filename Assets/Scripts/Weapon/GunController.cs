@@ -12,7 +12,9 @@ public class GunController : MonoBehaviour
     // 발사 방향 기준이 될 카메라 참조.
     [SerializeField] private Camera fireCamera;
 
-    [SerializeField] private GunData currentGunData = new GunData();
+    [SerializeField] private WeaponRuntimeState[] weaponSlots;
+    [SerializeField] private WeaponData weaponData;
+    [SerializeField] private int currentWeaponIndex = 0;
 
     // 현재 프레임 기준 발사 가능 여부.
     [SerializeField] private bool canFire = false;
@@ -23,8 +25,6 @@ public class GunController : MonoBehaviour
     // 이번 프레임에 발사 요청이 들어왔는지 여부.
     [SerializeField] private bool fireRequested = false;
 
-    [SerializeField] private int currentAmmo = 0;
-    [SerializeField] private int reserveAmmo = 0;
     [SerializeField] private bool isReloading = false;
     [SerializeField] private float reloadTimer = 0.0f;
 
@@ -32,15 +32,17 @@ public class GunController : MonoBehaviour
     {
         fireCamera = Camera.main;
 
-        currentAmmo = currentGunData.magazineSize;
-        reserveAmmo = currentGunData.startReserveAmmo;
         isReloading = false;
         reloadTimer = 0.0f;
+
+        InitializeWeaponSlots();
+        SelectWeapon(0);
     }
 
     // Update is called once per frame
     void Update()
     {
+        HandleWeaponSwitchInput();
         UpdateReloadTimer();
         // 재장전 입력 처리.
         HandleReloadInput();
@@ -55,11 +57,56 @@ public class GunController : MonoBehaviour
     }
 
     /// <summary>
+    /// 모든 무기 슬롯의 탄약 상태를 초기화.
+    /// </summary>
+    void InitializeWeaponSlots()
+    {
+        weaponSlots = new WeaponRuntimeState[weaponData.GetGunDatasCount()];
+
+        for(int i=0; i< weaponSlots.Length; ++i)
+        {
+            weaponSlots[i] = new WeaponRuntimeState();
+            weaponSlots[i].gunData = weaponData.GetGunDataByIndex(i);
+            if(weaponSlots[i].gunData != null)
+            {
+                weaponSlots[i].Initialize();
+            }
+        }
+    }
+
+    public void SelectWeapon(int weaponIndex)
+    {
+        currentWeaponIndex = weaponIndex;
+        isReloading = false;
+        reloadTimer = 0.0f;
+    }
+
+    void HandleWeaponSwitchInput()
+    {
+        if(combatInputReader.WeaponOnePressed == true)
+        {
+            SelectWeapon(0);
+        }
+
+        if (combatInputReader.WeaponTwoPressed == true)
+        {
+            SelectWeapon(1);
+        }
+
+        if (combatInputReader.WeaponThreePressed == true)
+        {
+            SelectWeapon(2);
+        }
+    }
+
+    /// <summary>
     /// 현재 총기 데이터의 사격 방식에 따라 이번 프레임 발사 요청 여부를 계산.
     /// </summary>
     void UpdateFireRequest()
     {
-        if(currentGunData.isAutomatic == true)
+        GunData gunData = weaponSlots[currentWeaponIndex].gunData;
+
+        if(gunData.isAutomatic == true)
         {
             // 자동 사격 총기라면 발사 버튼을 누르고 있는 동안 계속 발사 요청 상태로 간주.
             fireRequested = combatInputReader.FireHeld;
@@ -82,7 +129,7 @@ public class GunController : MonoBehaviour
         // 현재 시간에서 마지막으로 발사했던 시간 사이의 간격을 계산.
         float elapsedTimeSinceLastFire = currentTime - lastFireTime;
 
-        canFire = elapsedTimeSinceLastFire >= (currentGunData.fireInterval * aimController.FireIntervalMultiplier);
+        canFire = elapsedTimeSinceLastFire >= (CurrentGunData.fireInterval * aimController.FireIntervalMultiplier);
     }
 
     /// <summary>
@@ -90,12 +137,15 @@ public class GunController : MonoBehaviour
     /// </summary>
     void Fire()
     {
+        WeaponRuntimeState currentSlot = weaponSlots[currentWeaponIndex];
+        GunData gunData = currentSlot.gunData;
+
         if(isReloading == true)
         {
             return;
         }
 
-        if(currentAmmo <= 0)
+        if(currentSlot.currentAmmo <= 0)
         {
             return;
         }
@@ -106,21 +156,49 @@ public class GunController : MonoBehaviour
 
         Vector3 rayOrigin = cameraTransform.position;
         Vector3 rayDirection = cameraTransform.forward;
-        Vector3 rayLength = rayDirection * currentGunData.maxDistance;
+        Vector3 rayLength = rayDirection * CurrentGunData.maxDistance;
 
-        Debug.DrawRay(rayOrigin, rayLength, currentGunData.debugRayColor, 0.2f);
+        int pelletCount = gunData.pelletCount;
 
-        Ray fireRay = new Ray(rayOrigin, rayDirection);
-        RaycastHit hitInfo;
-
-        bool hasHit = Physics.Raycast(fireRay, out hitInfo, currentGunData.maxDistance, currentGunData.hitLayerMask);
-
-        if(hasHit == true)
+        for(int i=0; i<pelletCount; ++i)
         {
-            ProcessHit(hitInfo, rayDirection);
+            Vector3 shotDirection = CalculateShotDirection(rayDirection, gunData);
+
+            Debug.DrawRay(rayOrigin, rayLength, gunData.debugRayColor, 0.2f);
+
+            Ray fireRay = new Ray(rayOrigin, shotDirection);
+            RaycastHit hitInfo;
+
+            bool hasHit = Physics.Raycast(fireRay, out hitInfo,
+                gunData.maxDistance, gunData.hitLayerMask);
+
+            if (hasHit == true)
+            {
+                ProcessHit(hitInfo, shotDirection);
+            }
         }
 
-        currentAmmo--;
+        currentSlot.currentAmmo--;
+    }
+
+    Vector3 CalculateShotDirection(Vector3 baseDirection, GunData gunData)
+    {
+        if(gunData.pelletCount == 1)
+        {
+            return baseDirection;
+        }
+
+        if(gunData.spreadAngle <= 0.0f)
+        {
+            return baseDirection;
+        }
+
+        float randomPitch = Random.Range(-gunData.spreadAngle, gunData.spreadAngle);
+        float randomYaw = Random.Range(-gunData.spreadAngle, gunData.spreadAngle);
+        Quaternion spreadRotation = Quaternion.Euler(randomPitch, randomYaw, 0.0f);
+        Vector3 spreadDirection = spreadRotation * baseDirection;
+
+        return spreadDirection.normalized;
     }
 
     /// <summary>
@@ -130,6 +208,8 @@ public class GunController : MonoBehaviour
     /// <param name="rayDirection">총알의 진행 방향</param>
     void ProcessHit(RaycastHit hitInfo, Vector3 rayDirection)
     {
+        GunData gunData = weaponSlots[currentWeaponIndex].gunData;
+
         Collider hitCollider = hitInfo.collider;
 
         string hitObjectName = hitCollider.name;
@@ -139,11 +219,15 @@ public class GunController : MonoBehaviour
         IHitTarget hitTarget = hitCollider.GetComponent<IHitTarget>();
         if(hitTarget != null)
         {
-            hitTarget.ReceiveHit(currentGunData.damage, hitPoint, rayDirection, hitInfo.normal);
-            GameObject effectObject = Instantiate(currentGunData.hitEffectPrefab, hitPoint, Quaternion.identity);
-            if(effectObject != null)
+            hitTarget.ReceiveHit(gunData.damage, hitPoint, rayDirection, hitInfo.normal);
+
+            if(gunData.hitEffectPrefab != null)
             {
-                Destroy(effectObject, 1.0f);
+                GameObject effectObject = Instantiate(gunData.hitEffectPrefab, hitPoint, Quaternion.identity);
+                if (effectObject != null)
+                {
+                    Destroy(effectObject, 1.0f);
+                }
             }
         }
 
@@ -169,11 +253,14 @@ public class GunController : MonoBehaviour
 
     void CompleteReload()
     {
-        int neededAmmo = currentGunData.magazineSize - currentAmmo;
-        int ammoToLoad = Mathf.Min(neededAmmo, reserveAmmo);
+        WeaponRuntimeState currentSlot = weaponSlots[currentWeaponIndex];
+        GunData gunData = weaponSlots[currentWeaponIndex].gunData;
 
-        currentAmmo += ammoToLoad;
-        reserveAmmo -= ammoToLoad;
+        int neededAmmo = gunData.magazineSize - currentSlot.currentAmmo;
+        int ammoToLoad = Mathf.Min(neededAmmo, currentSlot.reserveAmmo);
+
+        currentSlot.currentAmmo += ammoToLoad;
+        currentSlot.reserveAmmo -= ammoToLoad;
 
         isReloading = false;
         reloadTimer = 0.0f;
@@ -190,29 +277,32 @@ public class GunController : MonoBehaviour
 
     bool TryStartReload()
     {
-        if(isReloading == true)
+        WeaponRuntimeState currentSlot = weaponSlots[currentWeaponIndex];
+        GunData gunData = weaponSlots[currentWeaponIndex].gunData;
+
+        if (isReloading == true)
         {
             return false;
         }
 
-        if(currentAmmo >= currentGunData.magazineSize)
+        if(currentSlot.currentAmmo >= gunData.magazineSize)
         {
             return false;
         }
 
-        if(reserveAmmo <= 0)
+        if(currentSlot.reserveAmmo <= 0)
         {
             return false;
         }
 
         isReloading = true;
-        reloadTimer = currentGunData.reloadDuration;
+        reloadTimer = gunData.reloadDuration;
         return true;
     }
 
     public GunData CurrentGunData
     {
-        get { return currentGunData; }
+        get { return weaponSlots[currentWeaponIndex].gunData; }
     }
 
     public bool CanFire
@@ -222,12 +312,12 @@ public class GunController : MonoBehaviour
 
     public int CurrentAmmo
     {
-        get { return currentAmmo; }
+        get { return weaponSlots[currentWeaponIndex].currentAmmo; }
     }
 
     public int ReserveAmmo
     {
-        get { return reserveAmmo; }
+        get { return weaponSlots[currentWeaponIndex].reserveAmmo; }
     }
 
     public bool IsReloading

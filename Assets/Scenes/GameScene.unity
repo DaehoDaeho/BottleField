@@ -968,25 +968,12 @@ MonoBehaviour:
   combatInputReader: {fileID: 448561763}
   aimController: {fileID: 448561765}
   fireCamera: {fileID: 0}
-  currentGunData:
-    gunName: Pistol
-    isAutomatic: 1
-    fireInterval: 0.25
-    maxDistance: 100
-    debugRayColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-    damage: 10
-    hitLayerMask:
-      serializedVersion: 2
-      m_Bits: 512
-    hitEffectPrefab: {fileID: 4515497926535975121, guid: bddb971e34eb14d48be30c7b922eb077, type: 3}
-    magazineSize: 30
-    startReserveAmmo: 90
-    reloadDuration: 1.5
+  weaponSlots: []
+  weaponData: {fileID: 11400000, guid: fd736b48d144fe542b03da5d244003e9, type: 2}
+  currentWeaponIndex: 0
   canFire: 0
   lastFireTime: -999
   fireRequested: 0
-  currentAmmo: 0
-  reserveAmmo: 0
   isReloading: 0
   reloadTimer: 0
 --- !u!114 &448561763
@@ -1005,6 +992,9 @@ MonoBehaviour:
   fireMouseButton: 0
   aimMouseButton: 1
   reloadKey: 114
+  weaponOneKey: 49
+  weaponTwoKey: 50
+  weaponThreeKey: 51
 --- !u!114 &448561764
 MonoBehaviour:
   m_ObjectHideFlags: 0

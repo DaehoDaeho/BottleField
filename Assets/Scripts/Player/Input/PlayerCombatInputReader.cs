@@ -15,6 +15,10 @@ public class PlayerCombatInputReader : MonoBehaviour
 
     [SerializeField] private KeyCode reloadKey = KeyCode.R;
 
+    [SerializeField] private KeyCode weaponOneKey = KeyCode.Alpha1;
+    [SerializeField] private KeyCode weaponTwoKey = KeyCode.Alpha2;
+    [SerializeField] private KeyCode weaponThreeKey = KeyCode.Alpha3;
+
     // 이번 프레임에 발사 버튼이 눌렸는지 저장.
     private bool firePressed = false;
 
@@ -102,6 +106,45 @@ public class PlayerCombatInputReader : MonoBehaviour
             }
 
             return Input.GetMouseButton(aimMouseButton);
+        }
+    }
+
+    public bool WeaponOnePressed
+    {
+        get
+        {
+            if (enableCombatInput == false)
+            {
+                return false;
+            }
+
+            return Input.GetKeyDown(weaponOneKey);
+        }
+    }
+
+    public bool WeaponTwoPressed
+    {
+        get
+        {
+            if (enableCombatInput == false)
+            {
+                return false;
+            }
+
+            return Input.GetKeyDown(weaponTwoKey);
+        }
+    }
+
+    public bool WeaponThreePressed
+    {
+        get
+        {
+            if (enableCombatInput == false)
+            {
+                return false;
+            }
+
+            return Input.GetKeyDown(weaponThreeKey);
         }
     }
 }

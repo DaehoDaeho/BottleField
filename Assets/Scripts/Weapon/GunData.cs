@@ -26,4 +26,7 @@ public class GunData
     public int magazineSize = 30;
     public int startReserveAmmo = 90;
     public float reloadDuration = 1.5f;
+
+    public int pelletCount = 1;
+    public float spreadAngle = 0.0f;
 }

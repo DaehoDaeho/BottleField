@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b242667f1acc6449be99f9204c17cb9, type: 3}
+  m_Name: WeaponData
+  m_EditorClassIdentifier: 
+  gunDatas:
+  - gunName: Pistol
+    isAutomatic: 0
+    fireInterval: 0.3
+    maxDistance: 100
+    debugRayColor: {r: 0, g: 0, b: 0, a: 0}
+    damage: 20
+    hitLayerMask:
+      serializedVersion: 2
+      m_Bits: 512
+    hitEffectPrefab: {fileID: 4515497926535975121, guid: bddb971e34eb14d48be30c7b922eb077, type: 3}
+    magazineSize: 8
+    startReserveAmmo: 32
+    reloadDuration: 1.2
+    pelletCount: 1
+    spreadAngle: 0
+  - gunName: Rifle
+    isAutomatic: 1
+    fireInterval: 0.1
+    maxDistance: 100
+    debugRayColor: {r: 0, g: 0, b: 0, a: 0}
+    damage: 10
+    hitLayerMask:
+      serializedVersion: 2
+      m_Bits: 512
+    hitEffectPrefab: {fileID: 4515497926535975121, guid: bddb971e34eb14d48be30c7b922eb077, type: 3}
+    magazineSize: 30
+    startReserveAmmo: 90
+    reloadDuration: 1.5
+    pelletCount: 1
+    spreadAngle: 0
+  - gunName: Shotgun
+    isAutomatic: 0
+    fireInterval: 0.8
+    maxDistance: 40
+    debugRayColor: {r: 0, g: 0, b: 0, a: 0}
+    damage: 8
+    hitLayerMask:
+      serializedVersion: 2
+      m_Bits: 512
+    hitEffectPrefab: {fileID: 4515497926535975121, guid: bddb971e34eb14d48be30c7b922eb077, type: 3}
+    magazineSize: 5
+    startReserveAmmo: 25
+    reloadDuration: 2
+    pelletCount: 8
+    spreadAngle: 6
