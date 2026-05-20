@@ -21,4 +21,15 @@ public class WeaponData : ScriptableObject
 
         return gunDatas[index];
     }
+
+    public void ReplaceGunDatas(List<GunData> newGunDatas)
+    {
+        if (newGunDatas == null)
+        {
+            gunDatas = new List<GunData>();
+            return;
+        }
+
+        gunDatas = new List<GunData>(newGunDatas);
+    }
 }
