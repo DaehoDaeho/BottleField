@@ -28,6 +28,10 @@ MonoBehaviour:
     reloadDuration: 1.2
     pelletCount: 1
     spreadAngle: 0
+    recoilPitch: 2.5
+    recoilReturnSpeed: 16
+    shakeDuration: 0.06
+    shakeStrength: 0.02
   - gunName: Rifle
     isAutomatic: 1
     fireInterval: 0.1
@@ -43,6 +47,10 @@ MonoBehaviour:
     reloadDuration: 1.5
     pelletCount: 1
     spreadAngle: 0
+    recoilPitch: 1.2
+    recoilReturnSpeed: 18
+    shakeDuration: 0.04
+    shakeStrength: 0.015
   - gunName: Shotgun
     isAutomatic: 0
     fireInterval: 0.8
@@ -58,3 +66,7 @@ MonoBehaviour:
     reloadDuration: 2
     pelletCount: 8
     spreadAngle: 6
+    recoilPitch: 6
+    recoilReturnSpeed: 10
+    shakeDuration: 0.12
+    shakeStrength: 0.06

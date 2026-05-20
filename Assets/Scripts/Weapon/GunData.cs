@@ -29,4 +29,9 @@ public class GunData
 
     public int pelletCount = 1;
     public float spreadAngle = 0.0f;
+
+    public float recoilPitch = 2.0f;
+    public float recoilReturnSpeed = 14.0f;
+    public float shakeDuration = 0.08f;
+    public float shakeStrength = 0.03f;
 }

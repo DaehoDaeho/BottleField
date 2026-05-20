@@ -12,6 +12,10 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private bool isInvincible = false;
     [SerializeField] private float invincibleTimer = 0.0f;
 
+    [SerializeField] private CameraShake cameraShake;
+    [SerializeField] private float damageShakeDuration = 0.15f;
+    [SerializeField] private float damageShakeStrength = 0.1f;
+
     public event Action<float, float> OnChangedHealth = null;
 
     private void Awake()
@@ -68,6 +72,11 @@ public class PlayerHealth : MonoBehaviour
         if(OnChangedHealth != null)
         {
             OnChangedHealth(currentHealth, maxHealth);
+        }
+
+        if(cameraShake != null)
+        {
+            cameraShake.Shake(damageShakeDuration, damageShakeStrength);
         }
     }
 

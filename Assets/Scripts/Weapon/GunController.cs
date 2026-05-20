@@ -28,6 +28,9 @@ public class GunController : MonoBehaviour
     [SerializeField] private bool isReloading = false;
     [SerializeField] private float reloadTimer = 0.0f;
 
+    [SerializeField] private CameraRecoil cameraRecoil;
+    [SerializeField] private CameraShake cameraShake;
+
     private void Awake()
     {
         fireCamera = Camera.main;
@@ -104,9 +107,7 @@ public class GunController : MonoBehaviour
     /// </summary>
     void UpdateFireRequest()
     {
-        GunData gunData = weaponSlots[currentWeaponIndex].gunData;
-
-        if(gunData.isAutomatic == true)
+        if(CurrentGunData.isAutomatic == true)
         {
             // 자동 사격 총기라면 발사 버튼을 누르고 있는 동안 계속 발사 요청 상태로 간주.
             fireRequested = combatInputReader.FireHeld;
@@ -137,15 +138,12 @@ public class GunController : MonoBehaviour
     /// </summary>
     void Fire()
     {
-        WeaponRuntimeState currentSlot = weaponSlots[currentWeaponIndex];
-        GunData gunData = currentSlot.gunData;
-
         if(isReloading == true)
         {
             return;
         }
 
-        if(currentSlot.currentAmmo <= 0)
+        if(CurrentSlot.currentAmmo <= 0)
         {
             return;
         }
@@ -158,19 +156,19 @@ public class GunController : MonoBehaviour
         Vector3 rayDirection = cameraTransform.forward;
         Vector3 rayLength = rayDirection * CurrentGunData.maxDistance;
 
-        int pelletCount = gunData.pelletCount;
+        int pelletCount = CurrentGunData.pelletCount;
 
         for(int i=0; i<pelletCount; ++i)
         {
-            Vector3 shotDirection = CalculateShotDirection(rayDirection, gunData);
+            Vector3 shotDirection = CalculateShotDirection(rayDirection, CurrentGunData);
 
-            Debug.DrawRay(rayOrigin, rayLength, gunData.debugRayColor, 0.2f);
+            Debug.DrawRay(rayOrigin, rayLength, CurrentGunData.debugRayColor, 0.2f);
 
             Ray fireRay = new Ray(rayOrigin, shotDirection);
             RaycastHit hitInfo;
 
             bool hasHit = Physics.Raycast(fireRay, out hitInfo,
-                gunData.maxDistance, gunData.hitLayerMask);
+                CurrentGunData.maxDistance, CurrentGunData.hitLayerMask);
 
             if (hasHit == true)
             {
@@ -178,7 +176,24 @@ public class GunController : MonoBehaviour
             }
         }
 
-        currentSlot.currentAmmo--;
+        CurrentSlot.currentAmmo--;
+
+        PlayWeaponFeedback();
+    }
+
+    void PlayWeaponFeedback()
+    {
+        if(cameraRecoil != null)
+        {
+            cameraRecoil.AddRecoil(CurrentGunData.recoilPitch,
+                CurrentGunData.recoilReturnSpeed);
+        }
+
+        if(cameraShake != null)
+        {
+            cameraShake.Shake(CurrentGunData.shakeDuration,
+                CurrentGunData.shakeStrength);
+        }
     }
 
     Vector3 CalculateShotDirection(Vector3 baseDirection, GunData gunData)
@@ -208,8 +223,6 @@ public class GunController : MonoBehaviour
     /// <param name="rayDirection">총알의 진행 방향</param>
     void ProcessHit(RaycastHit hitInfo, Vector3 rayDirection)
     {
-        GunData gunData = weaponSlots[currentWeaponIndex].gunData;
-
         Collider hitCollider = hitInfo.collider;
 
         string hitObjectName = hitCollider.name;
@@ -219,11 +232,11 @@ public class GunController : MonoBehaviour
         IHitTarget hitTarget = hitCollider.GetComponent<IHitTarget>();
         if(hitTarget != null)
         {
-            hitTarget.ReceiveHit(gunData.damage, hitPoint, rayDirection, hitInfo.normal);
+            hitTarget.ReceiveHit(CurrentGunData.damage, hitPoint, rayDirection, hitInfo.normal);
 
-            if(gunData.hitEffectPrefab != null)
+            if(CurrentGunData.hitEffectPrefab != null)
             {
-                GameObject effectObject = Instantiate(gunData.hitEffectPrefab, hitPoint, Quaternion.identity);
+                GameObject effectObject = Instantiate(CurrentGunData.hitEffectPrefab, hitPoint, Quaternion.identity);
                 if (effectObject != null)
                 {
                     Destroy(effectObject, 1.0f);
@@ -253,14 +266,11 @@ public class GunController : MonoBehaviour
 
     void CompleteReload()
     {
-        WeaponRuntimeState currentSlot = weaponSlots[currentWeaponIndex];
-        GunData gunData = weaponSlots[currentWeaponIndex].gunData;
+        int neededAmmo = CurrentGunData.magazineSize - CurrentSlot.currentAmmo;
+        int ammoToLoad = Mathf.Min(neededAmmo, CurrentSlot.reserveAmmo);
 
-        int neededAmmo = gunData.magazineSize - currentSlot.currentAmmo;
-        int ammoToLoad = Mathf.Min(neededAmmo, currentSlot.reserveAmmo);
-
-        currentSlot.currentAmmo += ammoToLoad;
-        currentSlot.reserveAmmo -= ammoToLoad;
+        CurrentSlot.currentAmmo += ammoToLoad;
+        CurrentSlot.reserveAmmo -= ammoToLoad;
 
         isReloading = false;
         reloadTimer = 0.0f;
@@ -277,32 +287,34 @@ public class GunController : MonoBehaviour
 
     bool TryStartReload()
     {
-        WeaponRuntimeState currentSlot = weaponSlots[currentWeaponIndex];
-        GunData gunData = weaponSlots[currentWeaponIndex].gunData;
-
         if (isReloading == true)
         {
             return false;
         }
 
-        if(currentSlot.currentAmmo >= gunData.magazineSize)
+        if(CurrentSlot.currentAmmo >= CurrentGunData.magazineSize)
         {
             return false;
         }
 
-        if(currentSlot.reserveAmmo <= 0)
+        if(CurrentSlot.reserveAmmo <= 0)
         {
             return false;
         }
 
         isReloading = true;
-        reloadTimer = gunData.reloadDuration;
+        reloadTimer = CurrentGunData.reloadDuration;
         return true;
     }
 
     public GunData CurrentGunData
     {
         get { return weaponSlots[currentWeaponIndex].gunData; }
+    }
+
+    public WeaponRuntimeState CurrentSlot
+    {
+        get { return weaponSlots[currentWeaponIndex]; }
     }
 
     public bool CanFire
