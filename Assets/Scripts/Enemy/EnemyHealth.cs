@@ -37,6 +37,12 @@ public class EnemyHealth : MonoBehaviour, IHitTarget
         {
             originalColors[i] = materials[i].color;
         }
+
+        EnemyHitBox[] enemyHitBox = GetComponentsInChildren<EnemyHitBox>();
+        for (int i = 0; i < enemyHitBox.Length; ++i)
+        {
+            enemyHitBox[i].SetEnemyHealth(this);
+        }
     }
 
     public void ReceiveHit(float damage, Vector3 hitPoint, Vector3 hitDirection, Vector3 hitNormal)
