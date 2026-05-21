@@ -17,12 +17,12 @@ MonoBehaviour:
     isAutomatic: 0
     fireInterval: 0.3
     maxDistance: 100
-    debugRayColor: {r: 0, g: 0, b: 0, a: 0}
+    debugRayColor: {r: 1, g: 0, b: 0, a: 1}
     damage: 20
     hitLayerMask:
       serializedVersion: 2
       m_Bits: 512
-    hitEffectPrefab: {fileID: 4515497926535975121, guid: bddb971e34eb14d48be30c7b922eb077, type: 3}
+    hitEffectPrefab: {fileID: 4515497926535975121, guid: fcfb817d43d36664b96a79422537ab91, type: 3}
     magazineSize: 8
     startReserveAmmo: 32
     reloadDuration: 1.2
@@ -30,18 +30,18 @@ MonoBehaviour:
     spreadAngle: 0
     recoilPitch: 2.5
     recoilReturnSpeed: 16
-    shakeDuration: 0.06
+    shakeDuration: 0.08
     shakeStrength: 0.02
   - gunName: Rifle
     isAutomatic: 1
     fireInterval: 0.1
     maxDistance: 100
-    debugRayColor: {r: 0, g: 0, b: 0, a: 0}
+    debugRayColor: {r: 0, g: 1, b: 0, a: 1}
     damage: 10
     hitLayerMask:
       serializedVersion: 2
       m_Bits: 512
-    hitEffectPrefab: {fileID: 4515497926535975121, guid: bddb971e34eb14d48be30c7b922eb077, type: 3}
+    hitEffectPrefab: {fileID: 4515497926535975121, guid: fcfb817d43d36664b96a79422537ab91, type: 3}
     magazineSize: 30
     startReserveAmmo: 90
     reloadDuration: 1.5
@@ -55,18 +55,18 @@ MonoBehaviour:
     isAutomatic: 0
     fireInterval: 0.8
     maxDistance: 40
-    debugRayColor: {r: 0, g: 0, b: 0, a: 0}
+    debugRayColor: {r: 0, g: 0, b: 1, a: 1}
     damage: 8
     hitLayerMask:
       serializedVersion: 2
       m_Bits: 512
-    hitEffectPrefab: {fileID: 4515497926535975121, guid: bddb971e34eb14d48be30c7b922eb077, type: 3}
+    hitEffectPrefab: {fileID: 4515497926535975121, guid: fcfb817d43d36664b96a79422537ab91, type: 3}
     magazineSize: 5
     startReserveAmmo: 25
     reloadDuration: 2
     pelletCount: 8
     spreadAngle: 6
-    recoilPitch: 6
+    recoilPitch: 8
     recoilReturnSpeed: 10
     shakeDuration: 0.12
     shakeStrength: 0.06

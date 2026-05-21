@@ -7,7 +7,7 @@ using UnityEngine;
 
 public static class WeaponDataCsvImporter
 {
-    private const string csvAssetPath = "Assets/Data/Csv/WeaponData.csv";
+    private const string csvAssetPath = "Assets/Data/WeaponDataCSV.csv";
     private const string weaponDataAssetPath = "Assets/Data/WeaponData.asset";
 
     /// <summary>
