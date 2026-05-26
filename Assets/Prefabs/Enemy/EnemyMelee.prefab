@@ -190,7 +190,7 @@ GameObject:
   - component: {fileID: 2837876833892403075}
   - component: {fileID: 7907451096005293997}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: EnemyMelee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

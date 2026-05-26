@@ -6,7 +6,7 @@ using System.Collections.Generic;
 /// </summary>
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private GameObject[] enemyPrefab;
     [SerializeField] private Transform playerTarget;
     [SerializeField] private Transform[] spawnPoints;
 
@@ -147,7 +147,9 @@ public class EnemySpawner : MonoBehaviour
     /// <param name="spawnPoint"></param>
     void SpawnEnemy(Transform spawnPoint)
     {
-        GameObject spawnedEnemy = Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+        int index = Random.Range(0, enemyPrefab.Length);
+
+        GameObject spawnedEnemy = Instantiate(enemyPrefab[index], spawnPoint.position, spawnPoint.rotation);
         aliveEnemies.Add(spawnedEnemy);
 
         EnemyTargetDetector targetDetector = spawnedEnemy.GetComponent<EnemyTargetDetector>();

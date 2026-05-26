@@ -371,7 +371,7 @@ GameObject:
   - component: {fileID: 137047223}
   - component: {fileID: 137047222}
   - component: {fileID: 137047221}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Wall (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -775,7 +775,7 @@ GameObject:
   - component: {fileID: 448561762}
   - component: {fileID: 448561764}
   - component: {fileID: 448561765}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1009,7 +1009,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 291c0a6a11840ee4a88f5aef71a359ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 50000
   currentHealth: 0
   invincibleDuration: 0.5
   isDead: 0
@@ -1227,7 +1227,7 @@ GameObject:
   - component: {fileID: 616044932}
   - component: {fileID: 616044931}
   - component: {fileID: 616044930}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Wall (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1609,7 +1609,7 @@ GameObject:
   - component: {fileID: 681673107}
   - component: {fileID: 681673106}
   - component: {fileID: 681673105}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2180,7 +2180,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9af0fd8c4b45cdc4b86ab5a260765fbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 5266118152557207975, guid: 91c11442e931b0b4ea80759e7a275817, type: 3}
+  enemyPrefab:
+  - {fileID: 5266118152557207975, guid: fc307dafe10000a42bead8752f70f818, type: 3}
+  - {fileID: 5266118152557207975, guid: fc307dafe10000a42bead8752f70f818, type: 3}
   playerTarget: {fileID: 448561755}
   spawnPoints:
   - {fileID: 976873876}
@@ -2218,7 +2220,7 @@ GameObject:
   - component: {fileID: 771882465}
   - component: {fileID: 771882464}
   - component: {fileID: 771882463}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Wall (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2467,7 +2469,7 @@ GameObject:
   - component: {fileID: 952714004}
   - component: {fileID: 952714003}
   - component: {fileID: 952714002}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2801,7 +2803,7 @@ GameObject:
   - component: {fileID: 1020626360}
   - component: {fileID: 1020626359}
   - component: {fileID: 1020626358}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4860,7 +4862,7 @@ GameObject:
   - component: {fileID: 1996214702}
   - component: {fileID: 1996214701}
   - component: {fileID: 1996214700}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Wall (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5047,7 +5049,7 @@ GameObject:
   - component: {fileID: 2071724267}
   - component: {fileID: 2071724266}
   - component: {fileID: 2071724265}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Wall (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
