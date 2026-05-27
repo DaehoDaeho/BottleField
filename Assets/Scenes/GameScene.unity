@@ -2161,6 +2161,7 @@ GameObject:
   m_Component:
   - component: {fileID: 771783316}
   - component: {fileID: 771783315}
+  - component: {fileID: 771783317}
   m_Layer: 0
   m_Name: EnemySpawner
   m_TagString: Untagged
@@ -2175,7 +2176,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 771783314}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9af0fd8c4b45cdc4b86ab5a260765fbd, type: 3}
   m_Name: 
@@ -2208,6 +2209,61 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2095391888}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &771783317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771783314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06ba1ce0d604a2345802bd748db147fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerTarget: {fileID: 448561755}
+  spawnPoints:
+  - {fileID: 976873876}
+  - {fileID: 398509332}
+  - {fileID: 1980101223}
+  - {fileID: 536101180}
+  waves:
+  - waveName: Melee Basic
+    waveDuration: 30
+    spawnInterval: 3
+    spawnCountPerInterval: 1
+    maxAliveEnemyCount: 4
+    enemyEntries:
+    - enemyPrefab: {fileID: 5266118152557207975, guid: 91c11442e931b0b4ea80759e7a275817, type: 3}
+      spawnWeight: 1
+  - waveName: Ranged Introduced
+    waveDuration: 35
+    spawnInterval: 2.5
+    spawnCountPerInterval: 1
+    maxAliveEnemyCount: 6
+    enemyEntries:
+    - enemyPrefab: {fileID: 5266118152557207975, guid: 91c11442e931b0b4ea80759e7a275817, type: 3}
+      spawnWeight: 3
+    - enemyPrefab: {fileID: 5266118152557207975, guid: fc307dafe10000a42bead8752f70f818, type: 3}
+      spawnWeight: 1
+  - waveName: Mixed Pressure
+    waveDuration: 40
+    spawnInterval: 2
+    spawnCountPerInterval: 2
+    maxAliveEnemyCount: 8
+    enemyEntries:
+    - enemyPrefab: {fileID: 5266118152557207975, guid: 91c11442e931b0b4ea80759e7a275817, type: 3}
+      spawnWeight: 2
+    - enemyPrefab: {fileID: 5266118152557207975, guid: fc307dafe10000a42bead8752f70f818, type: 3}
+      spawnWeight: 2
+  startOnPlay: 1
+  spawnOnWaveStart: 1
+  stopSpawningAfterLastWave: 1
+  currentWaveIndex: -1
+  currentWaveTimer: 0
+  spawnTimer: 0
+  isSpawning: 0
+  allWavesFinished: 0
 --- !u!1 &771882461
 GameObject:
   m_ObjectHideFlags: 0
@@ -3361,7 +3417,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerHealth: {fileID: 448561764}
   resultUi: {fileID: 142460140}
-  clearSurvivalTime: 60
+  clearSurvivalTime: 120
   currentState: 0
   survivalTimer: 0
   remainTimer: 0
