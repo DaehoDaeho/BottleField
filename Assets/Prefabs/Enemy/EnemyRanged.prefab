@@ -359,6 +359,7 @@ MonoBehaviour:
   navMeshAgent: {fileID: 165435827616508964}
   targetDetector: {fileID: 6966023298770321126}
   enemyHealth: {fileID: 2837876833892403075}
+  animator: {fileID: 3940612566708138919}
   attackMode: 1
   moveSpeed: 3.5
   angularSpeed: 360
@@ -659,6 +660,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitDamage: 30
   enemyHealth: {fileID: 0}
+--- !u!95 &3940612566708138919 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3096874295073007315, guid: e9ca564b445efc04a8877230e6dbd63a, type: 3}
+  m_PrefabInstance: {fileID: 2041696898997900660}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5081054890991324239 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6545445512110528827, guid: e9ca564b445efc04a8877230e6dbd63a, type: 3}

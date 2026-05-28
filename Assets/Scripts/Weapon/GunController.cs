@@ -307,6 +307,22 @@ public class GunController : MonoBehaviour
         return true;
     }
 
+    public bool AddReserveAmmo(int ammoAmount)
+    {
+        if(ammoAmount <= 0)
+        {
+            return false;
+        }
+
+        if(CurrentSlot == null)
+        {
+            return false;
+        }
+
+        CurrentSlot.reserveAmmo += ammoAmount;
+        return true;
+    }
+
     public GunData CurrentGunData
     {
         get { return weaponSlots[currentWeaponIndex].gunData; }
