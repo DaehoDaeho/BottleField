@@ -486,6 +486,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4416926081852918481, guid: e9ca564b445efc04a8877230e6dbd63a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8601989553041133181}
     - targetCorrespondingSourceObject: {fileID: 6545445512110528827, guid: e9ca564b445efc04a8877230e6dbd63a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7735562179744180030}
@@ -574,12 +577,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitDamage: 50
   enemyHealth: {fileID: 0}
+--- !u!1 &2385080816830586789 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4416926081852918481, guid: e9ca564b445efc04a8877230e6dbd63a, type: 3}
+  m_PrefabInstance: {fileID: 2041696898997900660}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8601989553041133181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2385080816830586789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a576e2e86cf19b849ba97cb456f67f80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stateMachine: {fileID: 7907451096005293997}
 --- !u!114 &2737754722442521419 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4155667870381833791, guid: e9ca564b445efc04a8877230e6dbd63a, type: 3}
   m_PrefabInstance: {fileID: 2041696898997900660}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2385080816830586789}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ba335a59abb5a5b4f8a4f0b52ba52a8d, type: 3}

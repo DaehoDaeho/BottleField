@@ -46,6 +46,7 @@ public class EnemyStateMachine : MonoBehaviour
     //[SerializeField] private float retreatDistance = 4.0f;
 
     [SerializeField] private EnemyState currentState = EnemyState.Idle;
+    [SerializeField] private GameObject muzzleEffect;
 
     private EnemyState previousState = EnemyState.Idle;
     private float repathTimer = 0.0f;
@@ -57,6 +58,11 @@ public class EnemyStateMachine : MonoBehaviour
     private void Awake()
     {
         ApplyAgentSettings();
+
+        if(muzzleEffect != null)
+        {
+            muzzleEffect.SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -78,10 +84,6 @@ public class EnemyStateMachine : MonoBehaviour
         else if(currentState == EnemyState.Chase)
         {
             animator.SetBool("IsMoving", true);
-        }
-        else if(currentState == EnemyState.Attack)  // 임시.
-        {
-            animator.SetBool("IsMoving", false);
         }
     }
 
@@ -363,8 +365,15 @@ public class EnemyStateMachine : MonoBehaviour
         if(elapsedTime >= attackInterval)
         {
             lastAttackTime = currentTime;
-            cachedPlayerHealth.ReceiveDamage(attackDamage, transform.position);
+            //cachedPlayerHealth.ReceiveDamage(attackDamage, transform.position);
+
+            animator.SetTrigger("MeleeAttack");
         }
+    }
+
+    public void ApplyDamageToPlayer()
+    {
+        cachedPlayerHealth.ReceiveDamage(attackDamage, transform.position);
     }
 
     /// <summary>
@@ -382,25 +391,34 @@ public class EnemyStateMachine : MonoBehaviour
 
         if(elapsedTime >= attackInterval)
         {
-            Vector3 rayOrigin = firePoint.position;
-            Vector3 targetPosition = targetDetector.TargetTransform.position +
-                (Vector3.up * rangedAimHeight);
-            Vector3 rayDirection = (targetPosition - rayOrigin).normalized;
-
             lastAttackTime = currentTime;
+            animator.SetTrigger("RangedAttack");
+        }
+    }
 
-            Ray attackRay = new Ray(rayOrigin, rayDirection);
-            RaycastHit hitInfo;
-            bool hasHit = Physics.Raycast(attackRay, out hitInfo, rangedAttackDistance, rangedHitLayerMask, QueryTriggerInteraction.Ignore);
+    public void ApplyToRangedDamageToPlayer()
+    {
+        if(muzzleEffect != null)
+        {
+            muzzleEffect.SetActive(true);
+        }
 
-            if(hasHit == true)
+        Vector3 rayOrigin = firePoint.position;
+        Vector3 targetPosition = targetDetector.TargetTransform.position +
+            (Vector3.up * rangedAimHeight);
+        Vector3 rayDirection = (targetPosition - rayOrigin).normalized;
+
+        Ray attackRay = new Ray(rayOrigin, rayDirection);
+        RaycastHit hitInfo;
+        bool hasHit = Physics.Raycast(attackRay, out hitInfo, rangedAttackDistance, rangedHitLayerMask, QueryTriggerInteraction.Ignore);
+
+        if (hasHit == true)
+        {
+            PlayerHealth hitPlayerHealth = hitInfo.collider.GetComponent<PlayerHealth>();
+
+            if (hitPlayerHealth != null && hitPlayerHealth.IsDead == false)
             {
-                PlayerHealth hitPlayerHealth = hitInfo.collider.GetComponent<PlayerHealth>();
-
-                if(hitPlayerHealth != null && hitPlayerHealth.IsDead == false)
-                {
-                    hitPlayerHealth.ReceiveDamage(attackDamage, transform.position);
-                }
+                hitPlayerHealth.ReceiveDamage(attackDamage, transform.position);
             }
         }
     }
