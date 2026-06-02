@@ -25,7 +25,7 @@ MonoBehaviour:
     hitEffectPrefab: {fileID: 4515497926535975121, guid: fcfb817d43d36664b96a79422537ab91, type: 3}
     magazineSize: 8
     startReserveAmmo: 32
-    reloadDuration: 1.2
+    reloadDuration: 2.5
     pelletCount: 1
     spreadAngle: 0
     recoilPitch: 2.5
