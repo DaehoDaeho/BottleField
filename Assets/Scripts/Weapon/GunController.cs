@@ -8,6 +8,7 @@ public class GunController : MonoBehaviour
 {
     [SerializeField] private PlayerCombatInputReader combatInputReader;
     [SerializeField] private PlayerAimController aimController;
+    [SerializeField] private Animator animator;
 
     // 발사 방향 기준이 될 카메라 참조.
     [SerializeField] private Camera fireCamera;
@@ -304,6 +305,12 @@ public class GunController : MonoBehaviour
 
         isReloading = true;
         reloadTimer = CurrentGunData.reloadDuration;
+
+        if(animator != null)
+        {
+            animator.SetTrigger("Reloading");
+        }
+
         return true;
     }
 

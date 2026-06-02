@@ -13,6 +13,8 @@ public class PlayerLocomotionController : MonoBehaviour
     [SerializeField] private Transform moveReference;
     [SerializeField] private Transform cameraBobTarget; // 이동 시 흔들림을 적용할 대상의 Transform.
 
+    [SerializeField] private Animator animator;
+
     [Header("속도 설정")]
     [SerializeField] private float walkSpeed = 5.0f;
     [SerializeField] private float sprintSpeed = 8.0f;
@@ -72,6 +74,7 @@ public class PlayerLocomotionController : MonoBehaviour
         UpdateJumpAndGravity();
         ApplyMovement();
         UpdateHeadBob();
+        UpdateMoveAnimation();
     }
 
     /// <summary>
@@ -252,5 +255,13 @@ public class PlayerLocomotionController : MonoBehaviour
 
         // 계산된 새 로컬 위치를 cameraBobTarget의에 적용.
         cameraBobTarget.localPosition = nextLocalPosition;
+    }
+
+    void UpdateMoveAnimation()
+    {
+        if(inputReader != null && animator != null)
+        {
+            animator.SetBool("IsMoving", inputReader.MoveInput != Vector2.zero);
+        }
     }
 }
