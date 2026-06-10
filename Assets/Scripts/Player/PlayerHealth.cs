@@ -17,6 +17,7 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private float damageShakeStrength = 0.1f;
 
     public event Action<float, float> OnChangedHealth = null;
+    public event Action<float, Vector3> Damaged;
 
     private void Awake()
     {
@@ -74,10 +75,12 @@ public class PlayerHealth : MonoBehaviour
             OnChangedHealth(currentHealth, maxHealth);
         }
 
-        if(cameraShake != null)
-        {
-            cameraShake.Shake(damageShakeDuration, damageShakeStrength);
-        }
+        //if(cameraShake != null)
+        //{
+        //    cameraShake.Shake(damageShakeDuration, damageShakeStrength);
+        //}
+
+        Damaged?.Invoke(damageAmount, damageSourcePosition);
     }
 
     void Die()

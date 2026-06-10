@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -31,6 +32,8 @@ public class GunController : MonoBehaviour
 
     [SerializeField] private CameraRecoil cameraRecoil;
     [SerializeField] private CameraShake cameraShake;
+
+    public event Action WeaponFired;
 
     private void Awake()
     {
@@ -184,17 +187,19 @@ public class GunController : MonoBehaviour
 
     void PlayWeaponFeedback()
     {
-        if(cameraRecoil != null)
-        {
-            cameraRecoil.AddRecoil(CurrentGunData.recoilPitch,
-                CurrentGunData.recoilReturnSpeed);
-        }
+        //if(cameraRecoil != null)
+        //{
+        //    cameraRecoil.AddRecoil(CurrentGunData.recoilPitch,
+        //        CurrentGunData.recoilReturnSpeed);
+        //}
 
-        if(cameraShake != null)
-        {
-            cameraShake.Shake(CurrentGunData.shakeDuration,
-                CurrentGunData.shakeStrength);
-        }
+        //if(cameraShake != null)
+        //{
+        //    cameraShake.Shake(CurrentGunData.shakeDuration,
+        //        CurrentGunData.shakeStrength);
+        //}
+
+        WeaponFired?.Invoke();
     }
 
     Vector3 CalculateShotDirection(Vector3 baseDirection, GunData gunData)
@@ -209,8 +214,8 @@ public class GunController : MonoBehaviour
             return baseDirection;
         }
 
-        float randomPitch = Random.Range(-gunData.spreadAngle, gunData.spreadAngle);
-        float randomYaw = Random.Range(-gunData.spreadAngle, gunData.spreadAngle);
+        float randomPitch = UnityEngine.Random.Range(-gunData.spreadAngle, gunData.spreadAngle);
+        float randomYaw = UnityEngine.Random.Range(-gunData.spreadAngle, gunData.spreadAngle);
         Quaternion spreadRotation = Quaternion.Euler(randomPitch, randomYaw, 0.0f);
         Vector3 spreadDirection = spreadRotation * baseDirection;
 
