@@ -5,7 +5,8 @@ public enum GameState
 {
     Playing,
     GameOver,
-    Clear
+    Clear,
+    ClearSequence
 }
 
 /// <summary>
@@ -26,6 +27,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameState currentState = GameState.Playing; // 현재 게임 상태를 저장.
     [SerializeField] private float survivalTimer = 0.0f; // 현재까지 플레이어가 생존한 시간을 저장.
     [SerializeField] private float remainTimer = 0.0f;
+
+    [SerializeField] private ClearCameraSequenceController sequenceController;
 
     private void Awake()
     {
@@ -133,6 +136,23 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        currentState = GameState.ClearSequence;
+
+        bool sequenceStarted = sequenceController.PlaySequence();
+
+        if(sequenceStarted == false)
+        {
+            CompleteClearSequence();
+        }
+    }
+
+    void CompleteClearSequence()
+    {
+        if(currentState != GameState.ClearSequence)
+        {
+            return;
+        }
+
         currentState = GameState.Clear;
         StopGameTime();
         ShowCursor();
@@ -140,6 +160,22 @@ public class GameManager : MonoBehaviour
         if (resultUi != null)
         {
             resultUi.ShowGameOver(survivalTimer, "Game Clear");
+        }
+    }
+
+    private void OnEnable()
+    {
+        if(sequenceController != null)
+        {
+            sequenceController.SequenceFinished += CompleteClearSequence;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (sequenceController != null)
+        {
+            sequenceController.SequenceFinished -= CompleteClearSequence;
         }
     }
 

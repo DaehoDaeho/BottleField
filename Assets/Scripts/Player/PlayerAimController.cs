@@ -1,3 +1,4 @@
+using Unity.Cinemachine;
 using UnityEngine;
 
 /// <summary>
@@ -7,6 +8,7 @@ public class PlayerAimController : MonoBehaviour
 {
     [SerializeField] private PlayerCombatInputReader combatInputReader;
     [SerializeField] private Camera targetCamera;
+    [SerializeField] private CinemachineCamera cinemachineCamera;
 
     [SerializeField] private float normalFov = 60.0f;
     [SerializeField] private float aimFov = 30.0f;
@@ -19,15 +21,15 @@ public class PlayerAimController : MonoBehaviour
 
     private void Awake()
     {
-        if(targetCamera == null)
-        {
-            targetCamera = Camera.main;
-        }
+        //if(targetCamera == null)
+        //{
+        //    targetCamera = Camera.main;
+        //}
 
-        if(targetCamera != null)
-        {
-            targetCamera.fieldOfView = normalFov;
-        }
+        //if(targetCamera != null)
+        //{
+        //    targetCamera.fieldOfView = normalFov;
+        //}
     }
 
     // Update is called once per frame
@@ -51,7 +53,9 @@ public class PlayerAimController : MonoBehaviour
     void UpdateCameraFov()
     {
         float targetFov = isAiming == true ? aimFov : normalFov;
-        targetCamera.fieldOfView = Mathf.Lerp(targetCamera.fieldOfView, targetFov, fovLerpSpeed * Time.deltaTime);
+        //targetCamera.fieldOfView = Mathf.Lerp(targetCamera.fieldOfView, targetFov, fovLerpSpeed * Time.deltaTime);
+
+        cinemachineCamera.Lens.FieldOfView = Mathf.Lerp(targetCamera.fieldOfView, targetFov, fovLerpSpeed * Time.deltaTime);
     }
 
     public bool IsAiming
